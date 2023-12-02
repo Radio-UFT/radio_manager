@@ -1,4 +1,6 @@
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
+from programa.forms import FormularioPrograma
 from programa.models import Programa
 from radio_manager.biblioteca import LoginObrigatorio
 from django.http import FileResponse, Http404
@@ -18,6 +20,15 @@ class ListarProgramas(LoginObrigatorio, ListView):
   #   if pesquisa is not None:
   #     queryset = queryset.filter(modelo__icontains=pesquisa)
   #   return queryset
+
+class CriarProgramas(LoginObrigatorio, CreateView):
+  """
+  View para a criação de novos veículos.
+  """
+  model = Programa
+  form_class = FormularioPrograma
+  template_name = 'programa/novo.html'
+  success_url = reverse_lazy('listar-programas')
   
 class FotoPrograma(LoginObrigatorio):
   """
