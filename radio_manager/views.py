@@ -15,7 +15,7 @@ class Login(View):
     if not request.user.is_authenticated:
       return render(request, 'login.html', mensage)
     else:
-      return HttpResponse('Usuário autenticado!')
+      return redirect('/programa')
     
   def post(self, request):
 
@@ -30,7 +30,7 @@ class Login(View):
       # Verificação da atividade do usuário no sistema.
       if user.is_active:
         login(request, user)
-        return HttpResponse('Usuário autenticado com sucesso!')
+        return redirect("/programa")
       return render(request, 'login.html', {"mensagem": "Usuário inativo"})
     
     return render(request, 'login.html', {"mensagem": "Usuário ou senha invalido"})

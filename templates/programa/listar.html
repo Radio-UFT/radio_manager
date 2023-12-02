@@ -1,0 +1,17 @@
+{% extends "../base.html" %}
+{% block titulo %} Listagem de Programas {% endblock %}
+{% block conteudo %}      
+<div class='container flex flex-col items-center bg-gray-500 border border-gray-200 mb-4 mt-4' style="width: 80%; padding-top: 2rem; padding-bottom: 2rem">
+    <!-- programa_list.html -->
+    {% for programa in programas %}
+    <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-md md:flex-row md:max-w-2xl mb-4 mt-4 dark:border-gray-700 dark:bg-gray-800 w-60" style="width: 80%;">
+        <img class="object-cover w-48 md:w-64 ml-4 rounded-t-lg h-96 md:h-auto md:rounded-none md:rounded-s-lg" src="{{ programa.foto.url }}" alt="{{ programa.nome }}">
+        <div class="flex flex-col justify-between p-4 leading-normal">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ programa.nome }}</h5>
+            <p class="mb-3 font-bold text-gray-700 dark:text-gray-400"><small>Horário: {{ programa.horario }}</small></p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ programa.descricao }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
