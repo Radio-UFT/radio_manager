@@ -1,0 +1,86 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block titulo %} Rádio UFT {% endblock %}</title>
+        {% tailwind_css %}
+    </head>
+    <body class="bg-white">
+        <nav class="bg-white border-gray-200 dark:bg-gray-900">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <img src="{% static "img/logo.png" %}" class="h-8" alt="Flowbite Logo" />
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Rádio UFT</span>
+                </a>
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                    <li>
+                        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                            Opções 
+                            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="dropdownNavbar" class="z-10 hidden absolute right-0 top-full font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                                <li>
+                                    <a href="/programa" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Listar Programas</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cadastrar Programas</a>
+                                </li>
+                            </ul>
+                            <div class="py-1">
+                                <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Deslogar</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Bem-vindo, {{ user.username }}</span>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        <script>
+            // Função para alternar a visibilidade do dropdown
+            function toggleDropdown(dropdownId) {
+              const dropdown = document.getElementById(dropdownId);
+              dropdown.classList.toggle('hidden');
+            }
+            
+            // Função para fechar todos os dropdowns quando clicar fora deles
+            function closeDropdowns(event) {
+              const dropdowns = document.querySelectorAll('.dropdown');
+              dropdowns.forEach((dropdown) => {
+                if (!dropdown.contains(event.target)) {
+                  dropdown.classList.add('hidden');
+                }
+              });
+            }
+            
+            // Adicionar um ouvinte de eventos para fechar dropdowns ao clicar fora deles
+            document.addEventListener('click', closeDropdowns);
+            
+            // Adicionar um ouvinte de eventos para o botão principal do dropdown
+            const mainDropdownButton = document.getElementById('dropdownNavbarLink');
+            mainDropdownButton.addEventListener('click', function () {
+              toggleDropdown('dropdownNavbar');
+            });
+            
+            // Adicionar um ouvinte de eventos para o botão do segundo dropdown
+            const doubleDropdownButton = document.getElementById('doubleDropdownButton');
+            doubleDropdownButton.addEventListener('click', function (e) {
+              e.stopPropagation(); // Impede a propagação do evento para o elemento pai (o dropdown principal)
+              toggleDropdown('doubleDropdown');
+            });
+        </script>
+        <div class="conteudo flex flex-col items-center ">
+            <!-- O conteúdo específico da página vai aqui -->
+            {% block conteudo %}{% endblock %}
+        </div>
+    </body>
+</html>
