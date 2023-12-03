@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from programa.forms import FormularioPrograma
 from programa.models import Programa
 from radio_manager.biblioteca import LoginObrigatorio
@@ -23,7 +23,7 @@ class ListarProgramas(LoginObrigatorio, ListView):
 
 class CriarProgramas(LoginObrigatorio, CreateView):
   """
-  View para a criação de novos veículos.
+  View para a criação de novos programas.
   """
   model = Programa
   form_class = FormularioPrograma
@@ -32,11 +32,19 @@ class CriarProgramas(LoginObrigatorio, CreateView):
 
 class EditarProgramas(LoginObrigatorio, UpdateView):
   """
-  View para a edição de veiculos já cadastrados.
+  View para a edição de programas já cadastrados.
   """
   model = Programa
   form_class = FormularioPrograma
   template_name = 'programa/editar.html'
+  success_url = reverse_lazy('listar-programas')
+
+class DeletarProgramas(LoginObrigatorio, DeleteView):
+  """
+  View para a exclusão de programas.
+  """
+  model = Programa
+  template_name = 'programa/deletar.html'
   success_url = reverse_lazy('listar-programas')
   
 class FotoPrograma(LoginObrigatorio):
