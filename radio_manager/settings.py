@@ -41,7 +41,11 @@ INSTALLED_APPS = [
 
     "tailwind",
     "theme",
-    "django_browser_reload"
+    "django_browser_reload",
+
+    'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -62,6 +66,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "radio_manager.urls"
@@ -141,3 +146,5 @@ STATICFILES_DIRS = [BASE_DIR/'radio_manager'/'static']
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CORS_ORIGIN_ALLOW_ALL = True

@@ -6,6 +6,11 @@ from radio_manager.biblioteca import LoginObrigatorio
 from django.http import FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 
+from rest_framework.generics import ListAPIView
+from programa.serializers import SerializadorPrograma
+# from rest_framework.authentication import TokenAuthentication
+# from rest_framework import permissions
+
 class ListarProgramas(LoginObrigatorio, ListView):
   """
   View para listar os programas cadastrados  
@@ -59,3 +64,14 @@ class FotoPrograma(LoginObrigatorio):
       raise Http404("Foto não encontrada ou acesso não autorizado")
     except Exception as exception:
       raise exception
+    
+class APIListarProgramas(ListAPIView):    
+  """
+  View para listar instâncias do programa (utilizando da API REST)    
+  """
+  serializer_class = SerializadorPrograma    
+  # authentication_classes = [TokenAuthentication]
+  # permission_classes = [permissions.IsAuthenticated]
+
+  def get_queryset(self):        
+    return Programa.objects.all()
