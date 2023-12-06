@@ -7,10 +7,7 @@
             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Adicione um novo programa</h2>
             <form action="/programa/{{ object.pk }}/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div>
-                  <div class="flex items-center justify-center">
-                    <img src="{{ object.foto.url }}" alt="Imagem atual" class="mt-2 mb-2 max-w-xs">
-                  </div>      
+                <div>     
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload de imagem</label>          
                   <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" name="foto" value="{{ object.foto.url }}">
                   <div class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-3" id="user_avatar_help">Neste campo envie a imagem que corresponderá a logo do programa</div>
@@ -28,7 +25,8 @@
                   
                     <div class="sm:col-span-2">
                       <label for="descricao" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
-                      <textarea id="descricao" name="descricao" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-3" placeholder="Insira a descrição do programa">{{ object.descricao }}</textarea>
+                      <textarea id="descricao" name="descricao" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-3" placeholder="Insira a descrição do programa" maxlength="200">{{ object.descricao }}</textarea>
+                      <div class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-3" id="user_avatar_help">Limite de 200 caracteres</div>
                   </div>
                   
                 </div>

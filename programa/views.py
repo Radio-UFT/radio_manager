@@ -19,13 +19,6 @@ class ListarProgramas(LoginObrigatorio, ListView):
   context_object_name = 'programas'
   template_name = 'programa/listar.html'
 
-  # def get_queryset(self, **kwargs):
-  #   pesquisa = self.request.GET.get('pesquisa', None)
-  #   queryset = Programa.objects.all()
-  #   if pesquisa is not None:
-  #     queryset = queryset.filter(modelo__icontains=pesquisa)
-  #   return queryset
-
 class CriarProgramas(LoginObrigatorio, CreateView):
   """
   View para a criação de novos programas.
@@ -69,9 +62,6 @@ class APIListarProgramas(ListAPIView):
   """
   View para listar instâncias do programa (utilizando da API REST)    
   """
-  serializer_class = SerializadorPrograma    
-  # authentication_classes = [TokenAuthentication]
-  # permission_classes = [permissions.IsAuthenticated]
-
+  serializer_class = SerializadorPrograma  
   def get_queryset(self):        
     return Programa.objects.all()
