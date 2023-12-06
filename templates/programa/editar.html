@@ -1,0 +1,40 @@
+{% extends "../base.html" %}
+{% block titulo %} Listagem de Programas {% endblock %}
+{% block conteudo %}
+<div class='container flex flex-col items-center bg-gray-500 border border-gray-200 mb-4 mt-4' style="width: 80%; padding-top: 2rem; padding-bottom: 2rem">
+    <section class="bg-white dark:bg-gray-900" style='padding: 3rem;'>
+        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Adicione um novo programa</h2>
+            <form action="/programa/{{ object.pk }}/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>     
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload de imagem</label>          
+                  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" name="foto" value="{{ object.foto.url }}">
+                  <div class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-3" id="user_avatar_help">Neste campo envie a imagem que corresponderá a logo do programa</div>
+                </div>
+              
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                    <div class="sm:col-span-2">
+                        <label for="nome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
+                        <input type="text" name="nome" id="nome" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-3" placeholder="Nome do programa" value="{{object.nome}}">
+                    </div>
+                    <div>
+                      <label for="horario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Horário</label>
+                      <input type="time" id="horario" name="horario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-3" placeholder="HH:mm" value="{{object.horario|date:'H:i'}}">
+                  </div>
+                  
+                    <div class="sm:col-span-2">
+                      <label for="descricao" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
+                      <textarea id="descricao" name="descricao" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 mb-3" placeholder="Insira a descrição do programa" maxlength="200">{{ object.descricao }}</textarea>
+                      <div class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-3" id="user_avatar_help">Limite de 200 caracteres</div>
+                  </div>
+                  
+                </div>
+                <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-primary-800">
+                Salvar edição
+                </button>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}

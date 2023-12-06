@@ -1,0 +1,73 @@
+{% extends "../base.html" %}
+{% block titulo %} Listagem de Programas {% endblock %}
+{% block conteudo %}      
+<div class='container flex flex-col items-center bg-gray-500 border border-gray-200 mb-4 mt-4' style="width: 80%; padding-top: 2rem; padding-bottom: 2rem">
+    <!-- programa_list.html -->
+    {% for programa in programas %}
+    <div class="relative flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-md md:flex-row md:max-w-2xl mb-4 mt-4 dark:border-red-700 dark:bg-gray-800 w-60" style="width: 80%;">
+        <img class="object-cover w-48 md:w-64 ml-4 rounded-t-lg h-96 md:h-auto md:rounded-none md:rounded-s-lg" src="{{ programa.foto.url }}" alt="{{ programa.nome }}">
+        <div class="flex flex-col justify-between p-4 leading-normal">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ programa.nome }}</h5>
+            <p class="mb-2 font-bold text-gray-700 dark:text-gray-400"><small>Horário: {{ programa.horario | date:'H:i' }}</small></p>
+            <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">{{ programa.descricao }}</p>
+            <!-- Botões de editar e deletar -->
+            <div>
+                <a href="/programa/{{programa.id}}" class="text-white font-bold py-2 px-4 rounded inline-flex items-center" style="background-color: green;">
+                    Editar
+                </a>
+                
+                <!-- Botão de Deleção -->
+                <a id="deleteButton-{{ programa.id }}" class="text-white font-bold py-2 px-4 rounded inline-flex items-center ml-2" style="background-color: red;">
+                    Deletar
+                </a>
+            
+                <!-- Popup de Confirmação -->
+                <div id="confirmationPopup-{{ programa.id }}" class="hidden absolute bg-white border rounded dark:border-gray-700 dark:bg-gray-800 p-4 shadow-md mt-2 z-10">
+                    <p class="text-white font-bold">Tem certeza que deseja deletar?</p>
+                    <div class="mt-4">
+                        <button class="bg-red-500 text-white px-4 py-2 rounded mr-2" onclick="confirmDelete('{{ programa.id }}')" style="background-color: red;">Confirmar</button>
+                        <button class="bg-gray-300 text-white px-4 py-2 rounded" onclick="cancelDelete('{{ programa.id }}')">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Script JavaScript -->
+<script>
+    {% for programa in programas %}
+    const deleteButton{{ programa.id }} = document.getElementById(`deleteButton-${ {{programa.id}} }`);
+    console.log(deleteButton{{ programa.id }});  // Verifique se o botão foi encontrado
+    
+    deleteButton{{ programa.id }}.addEventListener('click', () => {
+        const confirmationPopup = document.getElementById(`confirmationPopup-${ {{programa.id}} }`);
+        console.log(confirmationPopup);  // Verifique se o popup foi encontrado
+        confirmationPopup.classList.remove('hidden');
+    });
+    
+    {% endfor %}
+
+    function confirmDelete(programaId) {
+        // Lógica de confirmação de exclusão (opcional)
+        console.log(`Confirmar exclusão do programa ${programaId}`);
+        
+        // Aqui você pode adicionar lógica para enviar o formulário
+        const form = document.createElement('form');
+        form.action = `/programa/deletar/${programaId}/`;  // Substitua pela URL correta do seu Django
+        form.method = 'post';
+        form.innerHTML = `{% csrf_token %}`;
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function cancelDelete(programaId) {
+        const confirmationPopup = document.getElementById(`confirmationPopup-${programaId}`);
+        confirmationPopup.classList.add('hidden');
+    }
+
+</script>
+
+{% endblock %}
